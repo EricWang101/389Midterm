@@ -4,8 +4,10 @@
 <h2>Recent Posts:</h2> 
 {{/if}}
 
+<input id="search" name="search" type="text" placeholder="Search by Team Name">
+
 {{#each data}}
-<article>
+<article class = "dataEntry">
 	<h1 class = "team"> Team Name: {{this.TeamName}}, Total Wins: {{this.TotalWins}} </h1>
 	<h2 class="score"> Score: {{this.score}} </h2>
 	<h2 class = "location">Location: {{this.location}}, Number of Players: {{this.players}}</h2>
@@ -23,4 +25,39 @@
     <a href="/create">Write your first post!</a>
 </article>
 {{/each}}
+
+<article id="noResults" hidden="hidden">
+    <h1>There are No matches</h1>
+</article>
+
+<script>
+    $(document).ready(function () {
+        $("#search").keyup(function () {
+            var word = $(this).val().toLowerCase();
+            var count = 0;
+
+            $(".dataEntry").each(function (index, element) {
+                var teamName = $(element).find(".team").text().toLowerCase();
+
+                if (teamName.search(new RegExp(word, "i")) < 0) {
+                    $(this).fadeOut();
+                }
+                else {
+                    $(this).show();
+                    count++;
+                }
+            });
+
+            if (count == 0) { 
+                $("#noResults").show();
+            }
+            else { 
+                $("#noResults").hide();
+            }
+        
+        });
+
+    });
+
+</script>
 
