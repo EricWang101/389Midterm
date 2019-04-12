@@ -1,0 +1,36 @@
+<h1>Create Basketball Game Post</h1>
+<article>
+    <form method="POST" action="/api/create">
+        
+        <div class="input-field">
+            <label>TeamName:</label>
+            <input type="text" name="TeamName" size="50" placeholder="TeamName...">
+        </div>
+        <div class="input-field">
+            <label>TotalWins:</label>
+            <input type="text" name="TotalWins" size="50" placeholder="TotalWins...">
+        </div>
+
+        <div class="input-field">
+            <label>score:</label>
+            <input type="text" name="score" size="50" placeholder="Score...">
+        </div>
+         <div class="input-field">
+            <label>location:</label>
+            <input type="text" name="location" size="50" placeholder="location">
+        </div>
+        <div class="input-field">
+            <label>Stats:</label>
+            <input type="text" name="Stats" size="50" placeholder="Stat1 Stat2 Stat3 (seperated by spaces)">
+        </div>
+        <div class="input-field">
+            <label>players:</label>
+            <input type="text" name="players" size="50" placeholder="# of players">
+        </div>
+        <div class="input-field">
+            <label>summary:</label>
+            <textarea type="text" name="summary" rows="20" placeholder="Summary of Game"></textarea>
+        </div>
+        <button type="submit">Create Game Summary </button>
+    </form>
+</article>
