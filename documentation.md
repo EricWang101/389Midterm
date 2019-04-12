@@ -78,7 +78,7 @@ GET endpoint route: `/api/json`
 
 ### 4. Search Data
 
-Search Field: name
+Search Field: Team Name
 
 ### 5. Navigation Pages
 
