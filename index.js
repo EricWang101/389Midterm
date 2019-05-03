@@ -1,3 +1,11 @@
+
+
+//Variables to set up Database 
+var dotenv = require('dotenv').config({path: '/Users/Eric/Desktop/midterm-project/.env'});
+var mongoose = require('mongoose');
+var port = process.env.PORT;
+
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
@@ -6,8 +14,22 @@ var fs = require('fs');
 var _ = require("underscore");
 var dataUtil = require("./data-util");
 
-var _DATA = dataUtil.loadData().games;
 
+
+
+
+//Connecting Database to Mlab 
+mongoose.connect('mongodb://389final:389final@ds257054.mlab.com:57054/389final',{useNewUrlParser: true});
+//Temporary Scheme for a game 
+var game = require('./models/game')
+
+
+//This is just a test to see if it works..It does
+var test = new game({TeamName: 'Eric',TotalWins: 2 });
+ test.save(function (err, test) {
+    if (err) return console.error(err);
+    
+  });
 
 
 var app = express();
@@ -139,8 +161,6 @@ app.get("/api/randomGame", function(req, res) {
    });
 
 });
-
-
 
 
 
