@@ -21,6 +21,7 @@ var _DATA = dataUtil.loadData().games;
 mongoose.connect('mongodb://389final:389final@ds257054.mlab.com:57054/389final',{useNewUrlParser: true});
 // Scheme for a new team
 var team = require('./models/team')
+var game = require('./models/game')
 
 
 
@@ -39,7 +40,9 @@ app.use('/public', express.static('public'));
  */
 
 app.get('/',function(req,res){
+
   var tags = dataUtil.getAllTags(_DATA);
+  
   res.render('home',{
   	data: _DATA,
   	tags: tags
@@ -51,9 +54,27 @@ app.get('/api/json',function(req,res){
 	res.json(_DATA);
 });
 
-app.get("/create", function(req, res) {
-    res.render('create');
+app.get("/create_game", function(req, res) {
+    res.render('create_game');
 });
+
+app.post("/api/create_game",function(req,res){
+  var body = req.body;
+  var newGame = new game({
+    HomeTeamName: body.HomeTeamName,
+    AwayTeamName: body.AwayTeamName, 
+    Winner: body.Winner
+  });
+
+  newGame.save(function (err, newGame) {
+    if (err) return console.error(err);
+  });
+  res.redirect("/");
+
+   
+});
+
+
 
 app.get("/create_team", function(req,res){
   res.render('create_team');
@@ -64,6 +85,7 @@ app.post("/api/create_team",function(req,res){
 
 
   var newTeam = new team({TeamName: body.TeamName,TotalWins: body.TotalWins });
+  
   newTeam.save(function (err, newTeam) {
     if (err) return console.error(err);
   });
@@ -174,27 +196,6 @@ app.get("/api/randomGame", function(req, res) {
  
    });
 
-});
-
-
-
-app.post("/api/create",function(req,res){
-	var body = req.body;
-
-    // Transform tags and content 
-    body.Stats = body.Stats.split(" ");
-    body.TotalWins = parseInt(body.TotalWins);
-    body.TeamName = body.TeamName;
-    body.summary = (body.summary);
-    body.score = (body.score);
-    body.location = (body.location);
-    body.players = parseInt(body.players);
-
-  
-    // Save new blog post
-    _DATA.push(req.body);
-    dataUtil.saveData(_DATA);
-    res.redirect("/");
 });
 
 
