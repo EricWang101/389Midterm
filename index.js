@@ -22,6 +22,7 @@ mongoose.connect('mongodb://389final:389final@ds257054.mlab.com:57054/389final',
 // Scheme for a new team
 var team = require('./models/team')
 var game = require('./models/game')
+var challenge = require('./models/challenge')
 
 
 
@@ -50,9 +51,6 @@ app.get('/',function(req,res){
   });
 });
 
-app.get('/api/json',function(req,res){
-	res.json(_DATA);
-});
 
 app.get("/create_game", function(req, res) {
     res.render('create_game');
@@ -71,7 +69,6 @@ app.post("/api/create_game",function(req,res){
   });
   res.redirect("/");
 
-   
 });
 
 
@@ -82,7 +79,6 @@ app.get("/create_team", function(req,res){
 
 app.post("/api/create_team",function(req,res){
   var body = req.body;
-
 
   var newTeam = new team({TeamName: body.TeamName,TotalWins: body.TotalWins });
   
@@ -96,6 +92,33 @@ app.post("/api/create_team",function(req,res){
 
 
 
+app.get("/create_challenge", function(req,res){
+  res.render('create_challenge');
+});
+
+app.post("/api/create_challenge",function(req,res){
+  var body = req.body;
+
+  var newChallenge = new challenge({HomeTeamName: body.HomeTeamName, NumberOfPlayers: body.NumberOfPlayers, Location: body.Location });
+  
+  newChallenge.save(function (err, newChallenge) {
+    if (err) return console.error(err);
+  });
+  res.redirect("/");
+   
+});
+
+
+
+
+
+
+
+
+
+app.get('/api/json',function(req,res){
+  res.json(_DATA);
+});
 
 
 
