@@ -18,13 +18,20 @@
 </div>
 
 <body>
-  <button type="button" id="createNew" onclick = "location.href = '/create';">Enter a game</button> {{{body}}}
+  <button type="button" id="createNew" onclick = "location.href = '/create';">Enter a game</button> 
+  <button type="button" id="createNewTeam" onclick = "location.href = '/create_team';">Create a Team</button> 
+
+
+
+  {{{body}}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
   <script>
     $('#createNew').on('click', function() {
       console.log("hi");
     });
   </script>
+
+
 </body>
 
 </html>

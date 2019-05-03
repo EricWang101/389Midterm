@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var gameSchema = new mongoose.Schema({
+var teamSchema = new mongoose.Schema({
     TeamName: {
         type: String,
         required: true
@@ -11,6 +11,6 @@ var gameSchema = new mongoose.Schema({
     }
 });
 
-var game = mongoose.model('game', gameSchema);
+var team = mongoose.model('team', teamSchema);
 
-module.exports = game;
+module.exports = team;

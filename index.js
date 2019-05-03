@@ -13,23 +13,15 @@ var exphbs = require('express-handlebars');
 var fs = require('fs');
 var _ = require("underscore");
 var dataUtil = require("./data-util");
-
-
+var _DATA = dataUtil.loadData().games;
 
 
 
 //Connecting Database to Mlab 
 mongoose.connect('mongodb://389final:389final@ds257054.mlab.com:57054/389final',{useNewUrlParser: true});
-//Temporary Scheme for a game 
-var game = require('./models/game')
+// Scheme for a new team
+var team = require('./models/team')
 
-
-//This is just a test to see if it works..It does
-var test = new game({TeamName: 'Eric',TotalWins: 2 });
- test.save(function (err, test) {
-    if (err) return console.error(err);
-    
-  });
 
 
 var app = express();
@@ -62,6 +54,28 @@ app.get('/api/json',function(req,res){
 app.get("/create", function(req, res) {
     res.render('create');
 });
+
+app.get("/create_team", function(req,res){
+  res.render('create_team');
+});
+
+app.post("/api/create_team",function(req,res){
+  var body = req.body;
+
+
+  var newTeam = new team({TeamName: body.TeamName,TotalWins: body.TotalWins });
+  newTeam.save(function (err, newTeam) {
+    if (err) return console.error(err);
+  });
+  res.redirect("/");
+   
+});
+
+
+
+
+
+
 
 app.get("/api/gamesPlayedAtRichie", function(req, res) {
 
@@ -182,6 +196,11 @@ app.post("/api/create",function(req,res){
     dataUtil.saveData(_DATA);
     res.redirect("/");
 });
+
+
+
+
+
 
 
 
