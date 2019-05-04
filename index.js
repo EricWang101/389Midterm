@@ -35,6 +35,12 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.use('/public', express.static('public'));
 
+
+
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 /* Add whatever endpoints you need! Remember that your API endpoints must
  * have '/api' prepended to them. Please remember that you need at least 5
  * endpoints for the API, and 5 others.
@@ -94,20 +100,42 @@ app.post("/api/create_team",function(req,res){
 
 
 
+
+
+
+
+
 //Get and Post to create a Game: Third Schema 
 app.get("/create_challenge", function(req,res){
-  res.render('create_challenge');
+
+  challenge.find({}, function(err, challenges) {
+        return res.render('create_challenge', { challenges: challenges });
+    });
+ 
+
+
+  //res.render('create_challenge');
 });
 
-app.post("/api/create_challenge",function(req,res){
-  var body = req.body;
+app.post("/create_challenge",function(req,res){
+  var HomeTeamName = req.body.HomeTeamName;
+  var NumberOfPlayers = req.body.NumberOfPlayers;
+  var Location = req.body.Location;
 
-  var newChallenge = new challenge({HomeTeamName: body.HomeTeamName, NumberOfPlayers: body.NumberOfPlayers, Location: body.Location });
-  
-  newChallenge.save(function (err, newChallenge) {
-    if (err) return console.error(err);
+  var newChallenge = new challenge({
+    HomeTeamName:HomeTeamName,
+    NumberOfPlayers: NumberOfPlayers,
+    Location: Location
   });
-  res.redirect("/");
+  
+  newChallenge.save(function (err,newChallenge) {
+    if (err) return console.error(err);
+
+    io.emit('new game available', newChallenge);
+    return res.send('Done!');
+
+  });
+
    
 });
 
@@ -120,14 +148,7 @@ app.post("/api/create_challenge",function(req,res){
 
 
 
-
-
-app.get('/api/json',function(req,res){
-  res.json(_DATA);
-});
-
-
-
+//Displays the Teams Registered 
 app.get("/api/teams", function(req, res) {
 
 	team.find({}, function(err, users) { 
@@ -139,6 +160,7 @@ app.get("/api/teams", function(req, res) {
 
 
 
+//Displays the Summary of Games
 app.get("/api/gameSummary", function(req, res) {
 
   game.find({}, function(err, users) { 
@@ -151,71 +173,12 @@ app.get("/api/gameSummary", function(req, res) {
 });
 
 
+//Displays The Description of the Project
+app.get("/api/description", function(req, res) {
 
-
-
-
-app.get("/api/gamesPlayedAtEpply", function(req, res) {
-
-	var teams = [];
-    _.each(_DATA, function(i){
-
-    	if(i.location == null){
-    	}
-    	else{
-    		var temp = i.location; 
-    		if(temp ==="Epply" || temp ==="epply"){
-    			teams.push(i);
-    		}
-    	} 
-  	});
-  	res.render('epply', {
-  		data:teams
-
-  	});
-
-});
-
-app.get("/api/abc", function(req, res) {
-
-	var ordered = []; 
-	var copyData = JSON.parse(fs.readFileSync('data.json')).games;
-
-
-
-	copyData.sort(function(a, b){
-    if(a.TeamName < b.TeamName) { return -1; }
-    if(a.TeamName> b.TeamName) { return 1; }
-    return 0;
-	});
-	_.each(copyData, function(i){
-		ordered.push(i.TeamName);
-      
-  });
-	res.render('abc', {
-		data: copyData
-	});
-});
-
-app.get("/api/randomGame", function(req, res) {
-
-	var teams = [];
-	var counter = 0; 
-	var random = Math.floor(Math.random() * _DATA.length); 
-    _.each(_DATA, function(i){
-    	if(counter == random){
-    	teams.push(i);    
-   	    }
-   	    counter = counter +1;
-  	});
-
-   
-   
-   res.render('random', {
-   	data: teams
+  res.render('description')
+    
  
-   });
-
 });
 
 
@@ -225,6 +188,10 @@ app.get("/api/randomGame", function(req, res) {
 
 
 
-app.listen(process.env.PORT || 3000, function() {
+
+
+
+
+http.listen(process.env.PORT || 3000, function() {
     console.log('Listening!');
 });

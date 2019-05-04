@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/public/css/main.css">
+ <!-- <link rel="stylesheet" type="text/css" href="/public/css/main.css"> -->
   <title>Final Project</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 </head>
@@ -11,7 +11,8 @@
   <div>
     <a href="/">Game Available</a>
     <a href="/api/teams"> List of Registered Teams</a>
-   <a href="/api/gameSummary">Game Summarys</a>
+    <a href="/api/gameSummary">Game Summarys</a>
+    <a href="/api/description">Description of Project</a>
    
   </div>
 </div>
@@ -19,17 +20,50 @@
 <body>
   <button type="button" id="createNew" onclick = "location.href = '/create_game';">Enter a Game Summary</button> 
   <button type="button" id="createNewTeam" onclick = "location.href = '/create_team';">Create a Team</button> 
-  <button type="button" id="createNewTeam" onclick = "location.href = '/create_challenge';">Challenge an Opponent</button> 
+  <button type="button" id="createChallenge" onclick = "location.href = '/create_challenge';">Challenge an Opponent</button> 
+
 
 
 
   {{{body}}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
-  <script>
-    $('#createNew').on('click', function() {
-      console.log("hi");
+  
+<script src="/socket.io/socket.io.js"></script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+
+<script>
+    var socket = io();
+    $('#create_challenge').submit(function(){
+
+        var HomeTeamName = $('#HomeTeamName').val();
+        var NumberOfPlayers = $('#NumberOfPlayers').val();
+        var Location = $('#Location').val();
+        $('#HomeTeamName').val('');
+        $('#NumberOfPlayers').val('');
+        $('#Location').val('');
+        $.ajax({
+            type: "POST",
+            url: './create_challenge',
+            data: { 
+                        HomeTeamName: HomeTeamName,
+                        NumberOfPlayers: NumberOfPlayers,
+                        Location: Location 
+                    },
+            success: function(data, status){
+                console.log("YESSS");              
+            }
+        }); 
+        return false;
     });
-  </script>
+
+    socket.on('new game available', function(mov){
+    $('#challengeList').append($('<li>').text("Team Name: "+ mov.HomeTeamName + ", Number of Players: " + mov.NumberOfPlayers +" , Location: " + mov.Location));
+});
+ 
+</script>
+
 
 
 </body>
