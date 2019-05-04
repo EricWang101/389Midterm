@@ -1,0 +1,17 @@
+<h1> Game Summary's </h1>
+
+{{#each data}}
+<article>
+	<h1 class = "team"> Home Team Name: {{this.HomeTeamName}} </h1>
+	<h1 class = "team"> Away Team Name: {{this.AwayTeamName}} </h1>
+	<h1 class = "team"> Winner of the Game: {{this.Winner}} </h1>
+	<h1 class = "team"> Summary of the game: {{this.Summary}} </h1>
+	<hr>
+</article>
+{{else}}
+
+<article>
+    <h1>There are no teams yet. :(</h1>
+    <a href="/create_team">Write your team</a>
+</article>
+{{/each}}

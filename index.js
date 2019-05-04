@@ -40,18 +40,21 @@ app.use('/public', express.static('public'));
  * endpoints for the API, and 5 others.
  */
 
+
+
+//Main Page, Displays Games that are avaialbe
 app.get('/',function(req,res){
 
-  var tags = dataUtil.getAllTags(_DATA);
-  
-  res.render('home',{
-  	data: _DATA,
-  	tags: tags
-
-  });
+  challenge.find({}, function(err, users) { 
+     res.render('home',{
+     data: users,
+    });
+ });
 });
 
 
+
+//Get and post to Create a Game Summary: First Schema
 app.get("/create_game", function(req, res) {
     res.render('create_game');
 });
@@ -72,7 +75,7 @@ app.post("/api/create_game",function(req,res){
 });
 
 
-
+//Get and Post to Create A Team: Second Schema 
 app.get("/create_team", function(req,res){
   res.render('create_team');
 });
@@ -91,7 +94,7 @@ app.post("/api/create_team",function(req,res){
 
 
 
-
+//Get and Post to create a Game: Third Schema 
 app.get("/create_challenge", function(req,res){
   res.render('create_challenge');
 });
@@ -116,47 +119,41 @@ app.post("/api/create_challenge",function(req,res){
 
 
 
+
+
+
 app.get('/api/json',function(req,res){
   res.json(_DATA);
 });
 
 
 
-app.get("/api/gamesPlayedAtRichie", function(req, res) {
+app.get("/api/teams", function(req, res) {
 
-	var teams = [];
-    _.each(_DATA, function(i){
-
-    	if(i.location == null){
-    	}
-    	else{
-    		var temp = i.location; 
-    		if(temp ==="ritchie" || temp ==="Ritchie"){
-    			teams.push(i);
-    		}
-    	} 
-  	});
-  	res.render('ritchie', {
-  		data:teams
-
-  	});
-
-});
-
-app.get("/api/playoffTeams", function(req, res) {
-    
-    var playoffTeams = [];
-    _.each(_DATA, function(i){
-        if(i.TotalWins > 3 ){
-        playoffTeams.push(i);
-
-    }
-  });
-    
-    res.render('playoff',{
-    	data: playoffTeams
+	team.find({}, function(err, users) { 
+     res.render('teams',{
+     data: users,
     });
+ });
 });
+
+
+
+app.get("/api/gameSummary", function(req, res) {
+
+  game.find({}, function(err, users) { 
+     res.render('game_summary',{
+     data: users,
+    });
+ });
+    
+ 
+});
+
+
+
+
+
 
 app.get("/api/gamesPlayedAtEpply", function(req, res) {
 

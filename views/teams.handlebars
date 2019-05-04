@@ -1,0 +1,14 @@
+<h1> Here are the following registered teams! </h1>
+
+{{#each data}}
+<article>
+	<h1 class = "team"> Team Name: {{this.TeamName}}, Total Wins: {{this.TotalWins}} </h1>
+	<hr>
+</article>
+{{else}}
+
+<article>
+    <h1>There are no teams yet. :(</h1>
+    <a href="/create_team">Write your team</a>
+</article>
+{{/each}}

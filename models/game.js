@@ -12,6 +12,10 @@ var gameSchema = new mongoose.Schema({
     Winner: {
         type: String,
         required: true
+    },
+    Summary:{
+        type: String,
+        required: true
     }
 });
 
