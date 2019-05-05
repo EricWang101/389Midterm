@@ -41,6 +41,10 @@ app.use('/public', express.static('public'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 /* Add whatever endpoints you need! Remember that your API endpoints must
  * have '/api' prepended to them. Please remember that you need at least 5
  * endpoints for the API, and 5 others.
@@ -79,6 +83,25 @@ app.post("/api/create_game",function(req,res){
   res.redirect("/");
 
 });
+
+
+app.delete("/api/delete_game", function(req, res) {
+
+  var team = req.body.HomeTeamName;
+   
+    challenge.findOneAndDelete(team, function(err,chal){
+        if (err) throw err;
+        if(!chal) return res.send("Not Deleted")
+        res.send("Deleted")
+    })
+
+});
+
+
+app.get("/delete_game", function(req,res){
+  res.render('delete_game');
+});
+
 
 
 //Get and Post to Create A Team: Second Schema 
@@ -134,9 +157,7 @@ app.post("/create_challenge",function(req,res){
     io.emit('new game available', newChallenge);
     return res.send('Done!');
 
-  });
-
-   
+  });   
 });
 
 
@@ -168,22 +189,14 @@ app.get("/api/gameSummary", function(req, res) {
      data: users,
     });
  });
-    
- 
+   
 });
 
 
 //Displays The Description of the Project
 app.get("/api/description", function(req, res) {
-
-  res.render('description')
-    
- 
+  res.render('description')   
 });
-
-
-
-
 
 
 

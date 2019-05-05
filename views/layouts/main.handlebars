@@ -34,6 +34,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 
 <script>
+    
+    $(function (){
+
+
     var socket = io();
     $('#create_challenge').submit(function(){
 
@@ -59,8 +63,9 @@
     });
 
     socket.on('new game available', function(mov){
-    $('#challengeList').append($('<li>').text("Team Name: "+ mov.HomeTeamName + ", Number of Players: " + mov.NumberOfPlayers +" , Location: " + mov.Location));
-});
+    $('#challengeList').append($('<li>').text(" A New Challenge has been posted by Team : " + mov.HomeTeamName));
+  });
+  });
  
 </script>
 
