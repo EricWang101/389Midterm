@@ -87,12 +87,12 @@ app.post("/api/create_game",function(req,res){
 
 app.delete("/api/delete_game", function(req, res) {
 
-  var team = req.body.HomeTeamName;
+  var t = req.body.HomeTeamName;
    
-    challenge.findOneAndDelete(team, function(err,chal){
+    challenge.deleteOne({HomeTeamName: t}, function(err,chal){
         if (err) throw err;
-        if(!chal) return res.send("Not Deleted")
-        res.send("Deleted")
+        if(!chal) return res.send("Game was not found")
+        res.send("Game has been accepted")
     })
 
 });
@@ -100,6 +100,26 @@ app.delete("/api/delete_game", function(req, res) {
 
 app.get("/delete_game", function(req,res){
   res.render('delete_game');
+});
+
+
+
+
+app.get("/delete_team", function(req,res){
+  res.render('delete_team');
+});
+
+
+app.delete("/api/delete_team", function(req, res) {
+
+  var t = req.body.TeamName;
+   
+    team.deleteOne({TeamName: t}, function(err,chal){
+        if (err) throw err;
+        if(!t) return res.send("Team was not found")
+        res.send("Team has been deleted")
+    })
+
 });
 
 
@@ -163,12 +183,6 @@ app.post("/create_challenge",function(req,res){
 
 
 
-
-
-
-
-
-
 //Displays the Teams Registered 
 app.get("/api/teams", function(req, res) {
 
@@ -178,7 +192,6 @@ app.get("/api/teams", function(req, res) {
     });
  });
 });
-
 
 
 //Displays the Summary of Games
@@ -197,10 +210,6 @@ app.get("/api/gameSummary", function(req, res) {
 app.get("/api/description", function(req, res) {
   res.render('description')   
 });
-
-
-
-
 
 
 
