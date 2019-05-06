@@ -1,11 +1,14 @@
 
-
+<h2>Add a new challenge here!</h2>
 <form id="create_challenge">
-<input name="HomeTeamName" id="HomeTeamName" type="text" placeholder="Home Team name"/>
-<input name="NumberOfPlayers" id="NumberOfPlayers" type="text" placeholder="Number of Players"/>
-<input name="Location" id="Location" type="text" placeholder="Location"/>
+<label id="hostC">Hosting team:</label>
+<input name="HomeTeamName" id="HomeTeamName" type="text" placeholder="Home Team name"/><br/>
+<label id="numC"># of players needed:</label>
+<input name="NumberOfPlayers" id="NumberOfPlayers" type="text" placeholder="Number of Players"/><br/>
+<label id="locC">Location:</label>
+<input name="Location" id="Location" type="text" placeholder="Location"/><br/>
 
-<button type="submit">Create new Game </button>
+<button type="submit" id="challengeSub" class="buttn">Create new Game </button>
 </form>
 <br>
 
@@ -16,4 +19,3 @@
 <li> Team name: {{this.HomeTeamName}}, Number of Players:  {{this.NumberOfPlayers}}, Location: {{this.Location}}</li>
 {{/each}}
 </ul>
-<h1> You can also view games under Games Available List</h1>

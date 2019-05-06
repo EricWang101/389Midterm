@@ -1,25 +1,25 @@
 {{#if Stats}}
 <h2>Recent Posts in {{Stats}}:</h2> 
 {{else}}
-<h2>Games Available: </h2> 
+<h2 id="homeH2">Games Available: </h2> 
 {{/if}}
 
 <input id="search" name="search" type="text" placeholder="Search by Team Name">
 
 {{#each data}}
 <article class = "dataEntry">
-	<h1 class = "team"> Challenger's Team Name: {{this.HomeTeamName}} </h1>
+	<h1 class = "team"> Challengers Team Name: {{this.HomeTeamName}} </h1>
 	
-    <h1 class = "players"> Number of Player's Needed: {{this.NumberOfPlayers}} </h1>
+    <h1 class = "players"> Number of Players Needed: {{this.NumberOfPlayers}} </h1>
    
-    <h1 class = "location"> Number of Player's Needed: {{this.Location}} </h1>
+    <h1 class = "location"> Location: {{this.Location}} </h1>
     <hr>
 </article>
 {{else}}
 
 <article>
     <h1>There are no blog posts yet. :(</h1>
-    <a href="/create">Write your first post!</a>
+    <a href="/create" class="buttn">Write your first post!</a>
 </article>
 {{/each}}
 

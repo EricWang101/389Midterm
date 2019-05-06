@@ -14,7 +14,7 @@
 .navLink:hover {
 	color: blue;
 }
-#createNew,#createNewTeam,#createChallenge {
+#createNew,#createNewTeam,#createChallenge,.buttn {
 	color: blue;
 	margin: 20px;
 	padding: 10px;
@@ -24,7 +24,7 @@
 
 
 }
-#createNew:hover,#createNewTeam:hover,#createChallenge:hover {
+#createNew:hover,#createNewTeam:hover,#createChallenge:hover,.buttn:hover {
 	color: black;
 	padding: 12px;
 	
@@ -67,5 +67,32 @@ body {
 .input-field {
 	margin-bottom: 30px;
 }
-
-
+#locC {
+	font-size: 16px;
+	padding-right: 106px;
+}
+#numC {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+#hostC {
+	padding-right: 67px;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+#challengeSub{
+	padding: 5px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
+.dataEntry h1{
+	font-size: 20px;
+	font-weight: normal;
+}
+.team {
+	font-size: 20px;
+	font-weight: normal;
+}
+#homeH2{
+	font-size: 28px;
+}
